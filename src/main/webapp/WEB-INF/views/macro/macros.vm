@@ -1,0 +1,93 @@
+## 页面分页条
+#macro(pagination $pageNumber $totalPages)
+
+<input type="hidden" id="pageSize" name="pageSize" value="$!{page.pageSize}"/>
+<input type="hidden" id="searchProperty" name="searchProperty" value="$!{page.searchProperty}"/>
+<input type="hidden" id="orderProperty" name="orderProperty" value="$!{page.orderProperty}"/>
+<input type="hidden" id="orderDirection" name="orderDirection" value="$!{page.orderDirection}"/>
+
+##pageCount
+    #if($totalPages > 5)
+        #set($start = $pageNumber - 1)
+        #if($start < 1)
+            #set($start = 1)
+        #end
+        #set($end = $start + 2)
+        #if($end > $totalPages)
+            #set($end = $totalPages)
+            #set($start = $end - 2)
+        #end
+    #else
+        #set($start = 1)
+        #set($end = $totalPages)
+    #end
+    #set($prePage = $pageNumber - 1)
+    #set($nextPage = $pageNumber + 1)
+
+<nav>
+    <span class="pagination" style="float: right;padding: 3px 0 0 20px;">共${page.totalCount}条 共${totalPages}页 到第
+      <input id="pageNumber" name="pageNumber" value="${pageNumber}" style="width: 40px;" onpaste="return false;"/>页
+      <button type="submit">确定</button>
+    </span>
+
+    <ul class="pagination" style="float: right;">
+
+        #if ($pageNumber == 1)
+            <li class="disabled">
+                <span><span aria-hidden="true">⇤</span></span>
+            </li>
+            <li class="disabled">
+                <span><span aria-hidden="true">&laquo;</span></span>
+            </li>
+        #else
+            <li >
+                <a href="javascript: jQuery.pageSkip(1);" aria-label="Previous">
+                    <span aria-hidden="true">⇤</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="javascript: jQuery.pageSkip(${prePage});" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+        #end
+
+
+        #foreach ($idx in [$start..$end])
+            #if ($idx == $pageNumber)
+                <li>
+                    <span style="background-color: #57a3f1;color:#ffffff">${idx} <span class="sr-only">(current)</span></span>
+                </li>
+            #else
+                <li><a href="javascript: jQuery.pageSkip(${idx});">${idx}</a></li>
+            #end
+        #end
+
+
+
+        #if ($pageNumber < $totalPages)
+            <li>
+                <a href="javascript: jQuery.pageSkip(${nextPage});" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript: jQuery.pageSkip($totalPages);" aria-label="Next">
+                    <span aria-hidden="true">⇥</span>
+                </a>
+            </li>
+        #else
+            <li class="disabled">
+                <span><span aria-hidden="true">&raquo;</span></span>
+            </li>
+            <li class="disabled">
+                <span><span aria-hidden="true">⇥</span></span>
+            </li>
+        #end
+    </ul>
+
+</nav>
+
+#end

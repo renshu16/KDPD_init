@@ -1,0 +1,73 @@
+## 页面分页条
+##全部用js拼接,方便ajax调用
+
+#macro(pages $pageNumber $totalPages $onclick)
+
+
+<input type="hidden" id="pageSize" name="pageSize" value="$!{page.pageSize}"/>
+<input type="hidden" id="searchProperty" name="searchProperty" value="$!{page.searchProperty}"/>
+<input type="hidden" id="orderProperty" name="orderProperty" value="$!{page.orderProperty}"/>
+<input type="hidden" id="orderDirection" name="orderDirection" value="$!{page.orderDirection}"/>
+
+<script >
+
+    function reloadPages(pageNumber, totalPages) {
+        var pagination = $("#pageul");
+        var start;
+        var end;
+        if (totalPages > 5) {
+            start = pageNumber - 1;
+            if (start < 1)
+                start = 1;
+            end = start + 2;
+            if (end > totalPages) {
+                end = totalPages;
+                start = end - 2;
+            }
+        } else {
+            start = 1;
+            end = totalPages;
+        }
+
+        var prePage = pageNumber - 1;
+        var nextPage = pageNumber + 1;
+
+        var content = "";
+        if (pageNumber == 1) {
+            content += " <li class='disabled'><span><span >&laquo;</span></span></li>";
+        } else {
+            content += "<li><a href='#X' onclick='${onclick}("+prePage+")'> <span >&laquo;</span></a></li>"
+        }
+
+        for (var i = start; i <= end; i++) {
+            if (i == pageNumber) {
+                content += "<li><span style='background-color: #57a3f1;color:#ffffff'>" + i + "<span class='sr-only'>(current)</span></span></li>";
+            }else{
+                content+="<li><a href='#X' onclick=${onclick}("+i+")>"+i+"</a></li>";
+            }
+        }
+
+        if(pageNumber<totalPages){
+            content+="<li><a href='#X' onclick='${onclick}("+nextPage+")'><span >&raquo;</span></a></li>";
+        }else{
+            content+="<li class='disabled'><span><span >&raquo;</span></span></li>";
+        }
+
+        pagination.html(content);
+    }
+
+    reloadPages($pageNumber,$totalPages);
+
+
+</script>
+
+
+<nav>
+
+    <ul id="pageul" class="pagination" style="display:table;margin-left:auto;margin-right:20px">
+
+    </ul>
+
+</nav>
+
+#end

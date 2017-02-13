@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiyacloud.dao.mapper.StocktakeGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.aiyacloud.dao.domain.entity.StocktakeGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stocktake_main_id" property="stocktakeMainId" jdbcType="INTEGER" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="position_code" property="positionCode" jdbcType="VARCHAR" />
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_spec" property="goodsSpec" jdbcType="VARCHAR" />
+    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="batch" property="batch" jdbcType="VARCHAR" />
+    <result column="purchase_date" property="purchaseDate" jdbcType="VARCHAR" />
+    <result column="quality_guarantee_period" property="qualityGuaranteePeriod" jdbcType="INTEGER" />
+    <result column="basic_unit_code" property="basicUnitCode" jdbcType="VARCHAR" />
+    <result column="basic_unit" property="basicUnit" jdbcType="VARCHAR" />
+    <result column="basic_unit_book_num" property="basicUnitBookNum" jdbcType="INTEGER" />
+    <result column="basic_unit_stocktake_num" property="basicUnitStocktakeNum" jdbcType="INTEGER" />
+    <result column="unit_code" property="unitCode" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="book_num" property="bookNum" jdbcType="INTEGER" />
+    <result column="stocktake_num" property="stocktakeNum" jdbcType="INTEGER" />
+    <result column="diff_num" property="diffNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, stocktake_main_id, warehouse, warehouse_code, position, position_code, goods_code, 
+    goods_name, goods_spec, goods_type, goods_price, batch, purchase_date, quality_guarantee_period, 
+    basic_unit_code, basic_unit, basic_unit_book_num, basic_unit_stocktake_num, unit_code, 
+    unit, brand, bar_code, book_num, stocktake_num, diff_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aiyacloud.dao.domain.entity.StocktakeGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from i_stocktake_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_stocktake_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_stocktake_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aiyacloud.dao.domain.entity.StocktakeGoodsExample" >
+    delete from i_stocktake_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aiyacloud.dao.domain.entity.StocktakeGoods" >
+    insert into i_stocktake_goods (id, stocktake_main_id, warehouse, 
+      warehouse_code, position, position_code, 
+      goods_code, goods_name, goods_spec, 
+      goods_type, goods_price, batch, 
+      purchase_date, quality_guarantee_period, basic_unit_code, 
+      basic_unit, basic_unit_book_num, basic_unit_stocktake_num, 
+      unit_code, unit, brand, 
+      bar_code, book_num, stocktake_num, 
+      diff_num)
+    values (#{id,jdbcType=INTEGER}, #{stocktakeMainId,jdbcType=INTEGER}, #{warehouse,jdbcType=VARCHAR}, 
+      #{warehouseCode,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{positionCode,jdbcType=VARCHAR}, 
+      #{goodsCode,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsSpec,jdbcType=VARCHAR}, 
+      #{goodsType,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, #{batch,jdbcType=VARCHAR}, 
+      #{purchaseDate,jdbcType=VARCHAR}, #{qualityGuaranteePeriod,jdbcType=INTEGER}, #{basicUnitCode,jdbcType=VARCHAR}, 
+      #{basicUnit,jdbcType=VARCHAR}, #{basicUnitBookNum,jdbcType=INTEGER}, #{basicUnitStocktakeNum,jdbcType=INTEGER}, 
+      #{unitCode,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{barCode,jdbcType=VARCHAR}, #{bookNum,jdbcType=INTEGER}, #{stocktakeNum,jdbcType=INTEGER}, 
+      #{diffNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aiyacloud.dao.domain.entity.StocktakeGoods" >
+    insert into i_stocktake_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stocktakeMainId != null" >
+        stocktake_main_id,
+      </if>
+      <if test="warehouse != null" >
+        warehouse,
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="positionCode != null" >
+        position_code,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsSpec != null" >
+        goods_spec,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="batch != null" >
+        batch,
+      </if>
+      <if test="purchaseDate != null" >
+        purchase_date,
+      </if>
+      <if test="qualityGuaranteePeriod != null" >
+        quality_guarantee_period,
+      </if>
+      <if test="basicUnitCode != null" >
+        basic_unit_code,
+      </if>
+      <if test="basicUnit != null" >
+        basic_unit,
+      </if>
+      <if test="basicUnitBookNum != null" >
+        basic_unit_book_num,
+      </if>
+      <if test="basicUnitStocktakeNum != null" >
+        basic_unit_stocktake_num,
+      </if>
+      <if test="unitCode != null" >
+        unit_code,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="bookNum != null" >
+        book_num,
+      </if>
+      <if test="stocktakeNum != null" >
+        stocktake_num,
+      </if>
+      <if test="diffNum != null" >
+        diff_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeMainId != null" >
+        #{stocktakeMainId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="positionCode != null" >
+        #{positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSpec != null" >
+        #{goodsSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="batch != null" >
+        #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseDate != null" >
+        #{purchaseDate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityGuaranteePeriod != null" >
+        #{qualityGuaranteePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="basicUnitCode != null" >
+        #{basicUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="basicUnit != null" >
+        #{basicUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="basicUnitBookNum != null" >
+        #{basicUnitBookNum,jdbcType=INTEGER},
+      </if>
+      <if test="basicUnitStocktakeNum != null" >
+        #{basicUnitStocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="unitCode != null" >
+        #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bookNum != null" >
+        #{bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeNum != null" >
+        #{stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="diffNum != null" >
+        #{diffNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aiyacloud.dao.domain.entity.StocktakeGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from i_stocktake_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update i_stocktake_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stocktakeMainId != null" >
+        stocktake_main_id = #{record.stocktakeMainId,jdbcType=INTEGER},
+      </if>
+      <if test="record.warehouse != null" >
+        warehouse = #{record.warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warehouseCode != null" >
+        warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null" >
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionCode != null" >
+        position_code = #{record.positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCode != null" >
+        goods_code = #{record.goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsSpec != null" >
+        goods_spec = #{record.goodsSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsType != null" >
+        goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsPrice != null" >
+        goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.batch != null" >
+        batch = #{record.batch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseDate != null" >
+        purchase_date = #{record.purchaseDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualityGuaranteePeriod != null" >
+        quality_guarantee_period = #{record.qualityGuaranteePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.basicUnitCode != null" >
+        basic_unit_code = #{record.basicUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basicUnit != null" >
+        basic_unit = #{record.basicUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basicUnitBookNum != null" >
+        basic_unit_book_num = #{record.basicUnitBookNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.basicUnitStocktakeNum != null" >
+        basic_unit_stocktake_num = #{record.basicUnitStocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitCode != null" >
+        unit_code = #{record.unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.barCode != null" >
+        bar_code = #{record.barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookNum != null" >
+        book_num = #{record.bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.stocktakeNum != null" >
+        stocktake_num = #{record.stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.diffNum != null" >
+        diff_num = #{record.diffNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update i_stocktake_goods
+    set id = #{record.id,jdbcType=INTEGER},
+      stocktake_main_id = #{record.stocktakeMainId,jdbcType=INTEGER},
+      warehouse = #{record.warehouse,jdbcType=VARCHAR},
+      warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      position_code = #{record.positionCode,jdbcType=VARCHAR},
+      goods_code = #{record.goodsCode,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_spec = #{record.goodsSpec,jdbcType=VARCHAR},
+      goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      batch = #{record.batch,jdbcType=VARCHAR},
+      purchase_date = #{record.purchaseDate,jdbcType=VARCHAR},
+      quality_guarantee_period = #{record.qualityGuaranteePeriod,jdbcType=INTEGER},
+      basic_unit_code = #{record.basicUnitCode,jdbcType=VARCHAR},
+      basic_unit = #{record.basicUnit,jdbcType=VARCHAR},
+      basic_unit_book_num = #{record.basicUnitBookNum,jdbcType=INTEGER},
+      basic_unit_stocktake_num = #{record.basicUnitStocktakeNum,jdbcType=INTEGER},
+      unit_code = #{record.unitCode,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      bar_code = #{record.barCode,jdbcType=VARCHAR},
+      book_num = #{record.bookNum,jdbcType=INTEGER},
+      stocktake_num = #{record.stocktakeNum,jdbcType=INTEGER},
+      diff_num = #{record.diffNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aiyacloud.dao.domain.entity.StocktakeGoods" >
+    update i_stocktake_goods
+    <set >
+      <if test="stocktakeMainId != null" >
+        stocktake_main_id = #{stocktakeMainId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouse != null" >
+        warehouse = #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="positionCode != null" >
+        position_code = #{positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSpec != null" >
+        goods_spec = #{goodsSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="batch != null" >
+        batch = #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseDate != null" >
+        purchase_date = #{purchaseDate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityGuaranteePeriod != null" >
+        quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="basicUnitCode != null" >
+        basic_unit_code = #{basicUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="basicUnit != null" >
+        basic_unit = #{basicUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="basicUnitBookNum != null" >
+        basic_unit_book_num = #{basicUnitBookNum,jdbcType=INTEGER},
+      </if>
+      <if test="basicUnitStocktakeNum != null" >
+        basic_unit_stocktake_num = #{basicUnitStocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="unitCode != null" >
+        unit_code = #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bookNum != null" >
+        book_num = #{bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeNum != null" >
+        stocktake_num = #{stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="diffNum != null" >
+        diff_num = #{diffNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aiyacloud.dao.domain.entity.StocktakeGoods" >
+    update i_stocktake_goods
+    set stocktake_main_id = #{stocktakeMainId,jdbcType=INTEGER},
+      warehouse = #{warehouse,jdbcType=VARCHAR},
+      warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      position_code = #{positionCode,jdbcType=VARCHAR},
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_spec = #{goodsSpec,jdbcType=VARCHAR},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      batch = #{batch,jdbcType=VARCHAR},
+      purchase_date = #{purchaseDate,jdbcType=VARCHAR},
+      quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
+      basic_unit_code = #{basicUnitCode,jdbcType=VARCHAR},
+      basic_unit = #{basicUnit,jdbcType=VARCHAR},
+      basic_unit_book_num = #{basicUnitBookNum,jdbcType=INTEGER},
+      basic_unit_stocktake_num = #{basicUnitStocktakeNum,jdbcType=INTEGER},
+      unit_code = #{unitCode,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      book_num = #{bookNum,jdbcType=INTEGER},
+      stocktake_num = #{stocktakeNum,jdbcType=INTEGER},
+      diff_num = #{diffNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tools>
+
+    <toolbox scope="application">
+        <tool key="mathTool" class="org.apache.velocity.tools.generic.MathTool"/>
+        <tool key="displayTool" class="org.apache.velocity.tools.generic.DisplayTool"/>
+        <tool key="env" class="com.aiyacloud.Environment"/>
+        <tool key="date" class="com.aiyacloud.common.utils.DateUtils"/>
+        <tool key="stringUtils" class="org.apache.commons.lang.StringUtils"/>
+    </toolbox>
+
+</tools>
+

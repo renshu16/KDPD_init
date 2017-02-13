@@ -1,0 +1,275 @@
+#set($_admin = $session.getAttribute("CURRENT_ADMIN"))
+
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>牙友汇管理平台</title>
+    <link rel="shortcut icon" type="image/x-icon" href="#springUrl('')/favicon.ico?v=$env.sysVersion" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/js/skin/WdatePicker.css"/>
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/plugin/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/plugin/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/css/dashboard.css"/>
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/css/sticky-footer.css"/>
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/css/list.css"/>
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/css/sticky-footer.css"/>
+
+
+    <!--对话框插件-->
+    <link rel="stylesheet" type="text/css" href="#springUrl('')/static/css/jquery-confirm.min.css"/>
+
+
+    <style>
+        #navmenu .panel-heading a {
+            display: block;
+            text-decoration: none;
+        }
+
+        /* 必填项的星星图标 */
+        .must-star {
+            color: red;
+            padding-right: 4px;
+        }
+
+        #eventRing {
+            background-repeat: no-repeat;
+            background-image: url(/static/icon/ring.png);
+            width: 50px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .popover {
+            max-width: 1980px;
+        }
+
+    </style>
+    <script type="text/javascript" src="#springUrl('')/static/js/base64.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/js/utils.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/plugin/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/js/jquery.sortable.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/plugin/jquery.form-3.46.0.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/plugin/jquery.validate.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/plugin/additional-methods.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/plugin/bootstrap/js/bootstrap.min.js"></script>
+    <!--图片预览插件-->
+    <script type="text/javascript" src="#springUrl('')/static/plugin/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/js/list.js"></script>
+    <!--对话框插件-->
+    <script type="text/javascript" src="#springUrl('')/static/plugin/jquery-confirm.min.js"></script>
+    <!--日期插件-->
+
+    <script type="text/javascript" src="#springUrl('')/static/js/calendar.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/js/WdatePicker.js"></script>
+
+    <script src="/static/plugin/jquery.validate.js"></script>
+    <script src="/static/plugin/additional-methods.js"></script>
+
+    <!--图表插件-->
+    <script type="text/javascript" src="#springUrl('')/static/js/ichart.1.2.1.min.js"></script>
+    <!--openfire-->
+    <script src="$!{env.serverAddress}/statics/js/3rd/require.js"></script>
+    <script src="$!{env.serverAddress}/statics/js/socket.js"></script>
+    <!--图片旋转插件-->
+    <script type="text/javascript" src="#springUrl('')/static/js/jquery-animate-css-rotate-scale.js"></script>
+
+    <!--富文本编辑器-->
+    <script type="text/javascript" charset="utf-8" src="#springUrl('')/static/js/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="#springUrl('')/static/js/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="#springUrl('')/static/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+    <!-- 拖动排序插件-->
+
+
+    <!-- 检测缩放模式-->
+    <script type="text/javascript">
+        function detectZoom() {
+            var ratio = 0,
+                    screen = window.screen, //包含用户屏幕信息的screen对象
+                    ua = navigator.userAgent.toLowerCase();
+
+            if (window.devicePixelRatio !== undefined) { //谷歌。火狐支持物理像素和设备独立像素的比例
+                //正常为1
+                ratio = window.devicePixelRatio;
+            }
+            else if (ua.indexOf('msie')) {
+
+                if (screen.deviceXDPI && screen.logicalXDPI) { //IE 物理像素/独立像素
+                    ratio = screen.deviceXDPI / screen.logicalXDPI; //默认值为 96/96
+                }
+            }
+            else if (window.outerWidth !== undefined && window.innerWidth !== undefined) { //其他浏览器
+                ratio = window.outerWidth / window.innerWidth; //外部宽度/内部宽度
+            }
+
+            if (ratio) {
+                ratio = Math.round(ratio * 100);
+            }
+
+            return ratio;
+        }
+        ;
+
+        x = 0;
+        $(document).ready(function () {
+
+//            if (detectZoom() != 100) {
+//                alert("请将浏览器切换为正常模式！");
+//            };
+        });
+
+    </script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#springUrl('')/"
+               style="background-image: url(/static/icon/ac_logo.png) ;
+           background-repeat: no-repeat;width: 120px;height:35px;margin-top:10px;margin-left: 20px"></a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="javascript:void(0)" data-toggle="dropdown" style="color:#ffffff">
+                        管理员
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#springUrl('')/jumptoaiya">切换到爱牙</a></li>
+                        <li><a href="#springUrl('')/jumptoaiyamall">切换到爱牙商城</a></li>
+                        <li><a href="javascript:void(0)">版本号:1.0.3(SVN_VERSION)</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#springUrl('')/logout">退出</a></li>
+                    </ul>
+        </div>
+    </div>
+    <!-- /.navbar-collapse -->
+    <!-- /.container-fluid -->
+</nav>
+
+<div style="min-height: 300px;">
+    <div class="col-sm-2 sidebar">
+        <!-- 左侧菜单 -->
+        <div class="panel-group" id="navmenu" role="tablist" aria-multiselectable="true">
+            <div class="panel ">
+                <div class="panel-heading" role="tab" style="background-color: #57a3f1;color:#ffffff">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#navmenu"
+                           href="#menu1">盘点</a>
+                    </h4>
+                </div>
+                <div id="menu1" class="panel-collapse collapse" role="tabpanel">
+                    <div class="list-group ">
+                        <a class="list-group-item " href="/list">盘点列表</a>
+                        <a class="list-group-item " href="/view/">盘点详情</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-10 col-sm-offset-2 main">
+        $screen_content
+    </div>
+
+
+</div>
+
+<!--图片预览-->
+<div class="modal fade" id="TB_imageDetailModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 100%;height: 100%">
+    ##<div class="modal-content">
+        <div id="imgModalBody" class="modal-body" style="width: 100%;height: 100%">
+            <div class="row">
+                <div class="col-sm-10">
+                    <img id="TB_imageDetail" style="margin: 0 auto;display: block"/>
+                </div>
+                <div class="col-sm-2">
+                    <a class=" btn btn-warning" href="javascript:void(0)" id="rotateBtn"
+                       onclick="rotateWithAnimate($('#TB_imageDetail'))"> <span
+                            class="glyphicon glyphicon-refresh" style="font-size: large;"></span></a>
+                </div>
+            </div>
+        </div>
+    ##</div>
+    </div>
+</div>
+<!--提示音-->
+<audio id="bgsound" autostart="false" style="display:none" src="#springUrl('')/static/icon/tips.mp3"></audio>
+
+<!-- 清除浮动 -->
+<div class="clearfix"></div>
+##            <div class="container" style="position: absolute;bottom: 0;">
+##                <div class="col-sm-12 text-center">
+##                    <small>爱牙云管理平台 </small>
+##                    <br/>
+##                    <small>ICP备12056464号</small>
+##                </div>
+##            </div>
+
+
+<script>
+    /**
+     * 查看大图Modal,支持旋转
+     * example : <img src="1.jpg" onclick="TBShowImageDetailModal(this)"/>
+     */
+    function TBShowImageDetailModal(imgObj) {
+        if ($("#TB_imageDetailModal").is(":hidden")) {
+            $("#TB_imageDetailModal img").width($(window).width() * 0.6);
+            $("#TB_imageDetailModal img").height($(window).height() * 0.7);
+            var src = $(imgObj).attr("src");
+            $("#TB_imageDetailModal img").attr("src", src);
+            $("#TB_imageDetailModal").modal('show');
+        }
+
+    }
+
+
+</script>
+
+<script>
+
+    $(function () {
+        //初始化弹出框
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="tooltip"]').tooltip()
+        $("#imgModalBody").on('click', function () {
+            $("#TB_imageDetailModal").modal('hide');
+        });
+
+        //控制图片旋转
+        $("#rotateBtn").on('click', function (e) {
+            $("#TB_imageDetail").animate({rotate: '+=90deg'}, 250);
+            e.stopPropagation();
+        });
+    })
+
+
+    $(document).ready(function () {
+        // 把对应的左侧导航按钮设为选中状态
+        var path = document.location.pathname;
+        var paramIndex;
+        if ((paramIndex = path.indexOf("?")) != -1) {
+            path = path.substring(paramIndex, path.length);
+        }
+        $("a.list-group-item").css("background-color", "#ffffff");
+        var currItem = $("a.list-group-item[href*='" + path + "']");
+        currItem.css("background-color", "#e9cec8");
+        var currColl = currItem.parent().parent();
+        if (!currColl.hasClass("in")) {
+            currColl.prev().find("a").click();
+        }
+
+        $('.fancy').fancybox();
+    });
+
+</script>
+
+</body>
+</html>

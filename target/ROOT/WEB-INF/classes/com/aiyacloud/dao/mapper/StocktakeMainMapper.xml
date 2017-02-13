@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiyacloud.dao.mapper.StocktakeMainMapper" >
+  <resultMap id="BaseResultMap" type="com.aiyacloud.dao.domain.entity.StocktakeMain" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="book_num" property="bookNum" jdbcType="INTEGER" />
+    <result column="stocktake_num" property="stocktakeNum" jdbcType="INTEGER" />
+    <result column="book_amount" property="bookAmount" jdbcType="DECIMAL" />
+    <result column="stocktake_amount" property="stocktakeAmount" jdbcType="DECIMAL" />
+    <result column="goods_excel_name" property="goodsExcelName" jdbcType="VARCHAR" />
+    <result column="price_excel_name" property="priceExcelName" jdbcType="VARCHAR" />
+    <result column="goods_excel_path" property="goodsExcelPath" jdbcType="VARCHAR" />
+    <result column="price_excel_path" property="priceExcelPath" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, create_at, name, status, book_num, stocktake_num, book_amount, stocktake_amount, 
+    goods_excel_name, price_excel_name, goods_excel_path, price_excel_path, user_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aiyacloud.dao.domain.entity.StocktakeMainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from i_stocktake_main
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_stocktake_main
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_stocktake_main
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aiyacloud.dao.domain.entity.StocktakeMainExample" >
+    delete from i_stocktake_main
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aiyacloud.dao.domain.entity.StocktakeMain" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into i_stocktake_main (create_at, name, status, 
+      book_num, stocktake_num, book_amount, 
+      stocktake_amount, goods_excel_name, price_excel_name, 
+      goods_excel_path, price_excel_path, user_id
+      )
+    values (#{createAt,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{bookNum,jdbcType=INTEGER}, #{stocktakeNum,jdbcType=INTEGER}, #{bookAmount,jdbcType=DECIMAL}, 
+      #{stocktakeAmount,jdbcType=DECIMAL}, #{goodsExcelName,jdbcType=VARCHAR}, #{priceExcelName,jdbcType=VARCHAR}, 
+      #{goodsExcelPath,jdbcType=VARCHAR}, #{priceExcelPath,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.aiyacloud.dao.domain.entity.StocktakeMain" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into i_stocktake_main
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="bookNum != null" >
+        book_num,
+      </if>
+      <if test="stocktakeNum != null" >
+        stocktake_num,
+      </if>
+      <if test="bookAmount != null" >
+        book_amount,
+      </if>
+      <if test="stocktakeAmount != null" >
+        stocktake_amount,
+      </if>
+      <if test="goodsExcelName != null" >
+        goods_excel_name,
+      </if>
+      <if test="priceExcelName != null" >
+        price_excel_name,
+      </if>
+      <if test="goodsExcelPath != null" >
+        goods_excel_path,
+      </if>
+      <if test="priceExcelPath != null" >
+        price_excel_path,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="bookNum != null" >
+        #{bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeNum != null" >
+        #{stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookAmount != null" >
+        #{bookAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="stocktakeAmount != null" >
+        #{stocktakeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsExcelName != null" >
+        #{goodsExcelName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceExcelName != null" >
+        #{priceExcelName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsExcelPath != null" >
+        #{goodsExcelPath,jdbcType=VARCHAR},
+      </if>
+      <if test="priceExcelPath != null" >
+        #{priceExcelPath,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aiyacloud.dao.domain.entity.StocktakeMainExample" resultType="java.lang.Integer" >
+    select count(*) from i_stocktake_main
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update i_stocktake_main
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookNum != null" >
+        book_num = #{record.bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.stocktakeNum != null" >
+        stocktake_num = #{record.stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookAmount != null" >
+        book_amount = #{record.bookAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stocktakeAmount != null" >
+        stocktake_amount = #{record.stocktakeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsExcelName != null" >
+        goods_excel_name = #{record.goodsExcelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceExcelName != null" >
+        price_excel_name = #{record.priceExcelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsExcelPath != null" >
+        goods_excel_path = #{record.goodsExcelPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceExcelPath != null" >
+        price_excel_path = #{record.priceExcelPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update i_stocktake_main
+    set id = #{record.id,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      name = #{record.name,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      book_num = #{record.bookNum,jdbcType=INTEGER},
+      stocktake_num = #{record.stocktakeNum,jdbcType=INTEGER},
+      book_amount = #{record.bookAmount,jdbcType=DECIMAL},
+      stocktake_amount = #{record.stocktakeAmount,jdbcType=DECIMAL},
+      goods_excel_name = #{record.goodsExcelName,jdbcType=VARCHAR},
+      price_excel_name = #{record.priceExcelName,jdbcType=VARCHAR},
+      goods_excel_path = #{record.goodsExcelPath,jdbcType=VARCHAR},
+      price_excel_path = #{record.priceExcelPath,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aiyacloud.dao.domain.entity.StocktakeMain" >
+    update i_stocktake_main
+    <set >
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="bookNum != null" >
+        book_num = #{bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeNum != null" >
+        stocktake_num = #{stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookAmount != null" >
+        book_amount = #{bookAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="stocktakeAmount != null" >
+        stocktake_amount = #{stocktakeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsExcelName != null" >
+        goods_excel_name = #{goodsExcelName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceExcelName != null" >
+        price_excel_name = #{priceExcelName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsExcelPath != null" >
+        goods_excel_path = #{goodsExcelPath,jdbcType=VARCHAR},
+      </if>
+      <if test="priceExcelPath != null" >
+        price_excel_path = #{priceExcelPath,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aiyacloud.dao.domain.entity.StocktakeMain" >
+    update i_stocktake_main
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      book_num = #{bookNum,jdbcType=INTEGER},
+      stocktake_num = #{stocktakeNum,jdbcType=INTEGER},
+      book_amount = #{bookAmount,jdbcType=DECIMAL},
+      stocktake_amount = #{stocktakeAmount,jdbcType=DECIMAL},
+      goods_excel_name = #{goodsExcelName,jdbcType=VARCHAR},
+      price_excel_name = #{priceExcelName,jdbcType=VARCHAR},
+      goods_excel_path = #{goodsExcelPath,jdbcType=VARCHAR},
+      price_excel_path = #{priceExcelPath,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

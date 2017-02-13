@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiyacloud.dao.mapper.StocktakeLogMapper" >
+  <resultMap id="BaseResultMap" type="com.aiyacloud.dao.domain.entity.StocktakeLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stocktake_main_id" property="stocktakeMainId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="stocktake_num" property="stocktakeNum" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="use" property="use" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, stocktake_main_id, goods_id, stocktake_num, user_id, create_at, use
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aiyacloud.dao.domain.entity.StocktakeLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from i_stocktake_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_stocktake_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_stocktake_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aiyacloud.dao.domain.entity.StocktakeLogExample" >
+    delete from i_stocktake_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aiyacloud.dao.domain.entity.StocktakeLog" >
+    insert into i_stocktake_log (id, stocktake_main_id, goods_id, 
+      stocktake_num, user_id, create_at, 
+      use)
+    values (#{id,jdbcType=INTEGER}, #{stocktakeMainId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{stocktakeNum,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{use,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aiyacloud.dao.domain.entity.StocktakeLog" >
+    insert into i_stocktake_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stocktakeMainId != null" >
+        stocktake_main_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="stocktakeNum != null" >
+        stocktake_num,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="use != null" >
+        use,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeMainId != null" >
+        #{stocktakeMainId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeNum != null" >
+        #{stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="use != null" >
+        #{use,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aiyacloud.dao.domain.entity.StocktakeLogExample" resultType="java.lang.Integer" >
+    select count(*) from i_stocktake_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update i_stocktake_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stocktakeMainId != null" >
+        stocktake_main_id = #{record.stocktakeMainId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stocktakeNum != null" >
+        stocktake_num = #{record.stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createAt != null" >
+        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.use != null" >
+        use = #{record.use,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update i_stocktake_log
+    set id = #{record.id,jdbcType=INTEGER},
+      stocktake_main_id = #{record.stocktakeMainId,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      stocktake_num = #{record.stocktakeNum,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      use = #{record.use,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aiyacloud.dao.domain.entity.StocktakeLog" >
+    update i_stocktake_log
+    <set >
+      <if test="stocktakeMainId != null" >
+        stocktake_main_id = #{stocktakeMainId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="stocktakeNum != null" >
+        stocktake_num = #{stocktakeNum,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="use != null" >
+        use = #{use,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aiyacloud.dao.domain.entity.StocktakeLog" >
+    update i_stocktake_log
+    set stocktake_main_id = #{stocktakeMainId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      stocktake_num = #{stocktakeNum,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      use = #{use,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

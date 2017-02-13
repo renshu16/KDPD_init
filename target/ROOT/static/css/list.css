@@ -1,0 +1,11 @@
+.sortAsc:after {
+    content:" ▲";
+}
+.sortDesc:after{
+    content:" ▼";
+}
+
+.sortth:hover{
+    cursor:pointer  !important;
+    color:#ff9900  !important;
+}
